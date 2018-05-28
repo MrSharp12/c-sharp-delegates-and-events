@@ -28,19 +28,23 @@ namespace DelegatesAndEvents
 			//del2(10, WorkType.GoToMeetings);
 
 			var worker = new Worker();
-			worker.WorkPerformed += new EventHandler<WorkPerformedEventArgs>(worker_WorkPerformed);
-			worker.WorkCompleted += new EventHandler(worker_WorkCompleted);
+			worker.WorkPerformed += delegate (object sender, WorkPerformedEventArgs e)//annoymous method
+			{
+				Console.WriteLine("Hours worked:  " + e.Hours + " " + e.WorkType);
+
+			};
+			worker.WorkCompleted += Worker_WorkCompleted;//delegate inference
 			worker.DoWork(8, WorkType.PlayRPGs);
 
 			Console.Read();
         }
         
-		static void worker_WorkPerformed(object sender, WorkPerformedEventArgs e)
-		{
-			Console.WriteLine("Hours worked:  " + e.Hours + " " + e.WorkType);
-		}
+		//static void Worker_WorkPerformed(object sender, WorkPerformedEventArgs e)
+		//{
+		//	Console.WriteLine("Hours worked:  " + e.Hours + " " + e.WorkType);
+		//}
 
-		static void worker_WorkCompleted(object sender, EventArgs e)
+		static void Worker_WorkCompleted(object sender, EventArgs e)
 		{
 			Console.WriteLine("Worker is done");
 		}
