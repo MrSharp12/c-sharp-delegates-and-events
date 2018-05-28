@@ -7,7 +7,7 @@ namespace DelegatesAndEvents
 
     class MainClass
     {
-        public static void Main(string[] args)
+        private static void Main(string[] args)
         {
 			//WorkPerformedHandler del1 = new WorkPerformedHandler(WorkPerformed1);
 			//WorkPerformedHandler del2 = new WorkPerformedHandler(WorkPerformed2);
@@ -28,16 +28,28 @@ namespace DelegatesAndEvents
 			//del2(10, WorkType.GoToMeetings);
 
 			var worker = new Worker();
-            worker.
+			worker.WorkPerformed += new EventHandler<WorkPerformedEventArgs>(worker_WorkPerformed);
+			worker.WorkCompleted += new EventHandler(worker_WorkCompleted);
+			worker.DoWork(8, WorkType.PlayRPGs);
 
 			Console.Read();
         }
+        
+		static void worker_WorkPerformed(object sender, WorkPerformedEventArgs e)
+		{
+			Console.WriteLine("Hours worked:  " + e.Hours + " " + e.WorkType);
+		}
 
+		static void worker_WorkCompleted(object sender, EventArgs e)
+		{
+			Console.WriteLine("Worker is done");
+		}
+        
   //      static void DoWork(WorkPerformedHandler del)
 		//{
 		//	del(5, WorkType.PlayRPGs);
 		//}
-
+        
   //      //Events
   //      static int WorkPerformed1(int hours, WorkType workType)
 		//{
